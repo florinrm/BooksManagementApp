@@ -41,12 +41,9 @@ public class RedisConfig {
         return new JedisConnectionFactory(configuration);
     }
 
-    /**
-     * @return RedisTemplate used for storing yet to be processed tasks in queue
-     */
     @Bean
     @Autowired
-    public RedisTemplate<String, Book> redisTemplateTask() {
+    public RedisTemplate<String, Book> redisTemplateBook() {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
         objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
@@ -64,5 +61,4 @@ public class RedisConfig {
         template.setEnableTransactionSupport(true);
         return template;
     }
-
 }
