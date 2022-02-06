@@ -1,6 +1,7 @@
 package com.book.demo.config;
 
 import com.book.demo.domain.Book;
+import com.book.demo.domain.OperationLog;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -53,6 +54,27 @@ public class RedisConfig {
         jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
 
         RedisTemplate<String, Book> template = new RedisTemplate<>();
+        template.setConnectionFactory(jedisConnectionFactory());
+        template.setKeySerializer(new StringRedisSerializer());
+        template.setHashKeySerializer(new StringRedisSerializer());
+        template.setHashValueSerializer(jackson2JsonRedisSerializer);
+        template.setValueSerializer(jackson2JsonRedisSerializer);
+        template.setEnableTransactionSupport(true);
+        return template;
+    }
+
+    @Bean
+    @Autowired
+    public RedisTemplate<String, OperationLog> redisTemplateLog() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+        objectMapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+        //Set date format
+        objectMapper.setDateFormat(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"));
+        Jackson2JsonRedisSerializer<OperationLog> jackson2JsonRedisSerializer = new Jackson2JsonRedisSerializer<>(OperationLog.class);
+        jackson2JsonRedisSerializer.setObjectMapper(objectMapper);
+
+        RedisTemplate<String, OperationLog> template = new RedisTemplate<>();
         template.setConnectionFactory(jedisConnectionFactory());
         template.setKeySerializer(new StringRedisSerializer());
         template.setHashKeySerializer(new StringRedisSerializer());

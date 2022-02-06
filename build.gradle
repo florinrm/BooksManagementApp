@@ -37,6 +37,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 	implementation 'redis.clients:jedis:3.7.0'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.5'
+	testImplementation 'com.fasterxml.jackson.core:jackson-databind:2.10.0'
 }
 
 dependencyManagement {
