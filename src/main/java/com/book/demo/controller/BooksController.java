@@ -57,7 +57,7 @@ public class BooksController {
     }
 
     @PostMapping
-    public ResponseEntity<?> addBook(Book book) {
+    public ResponseEntity<?> addBook(@RequestBody Book book) {
         if (!validBookStatus(book)) {
             return ResponseEntity.badRequest().build();
         }
@@ -86,8 +86,7 @@ public class BooksController {
 
     @PutMapping("/{id}")
     public ResponseEntity<?> modifyBookById(@RequestBody Book book, @PathVariable String id) {
-        var result = booksRepository.findById(id);
-        if (result.isPresent()) {
+        if (booksRepository.existsById(id)) {
             booksRepository.deleteById(id);
             operationLogService.logOperation(OperationType.UPDATE_BOOK);
             return new ResponseEntity<>(booksRepository.save(book), HttpStatus.OK);

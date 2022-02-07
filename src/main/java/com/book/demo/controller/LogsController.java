@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/controller")
+@RequestMapping("/logs")
 public class LogsController {
     @Autowired
     private OperationLogRepository operationLogRepository;

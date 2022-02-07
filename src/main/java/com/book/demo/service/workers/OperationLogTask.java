@@ -13,17 +13,14 @@ public class OperationLogTask implements Runnable {
     private final ExecutorService executorService;
     private final OperationLogRepository operationLogRepository;
     private final RedisTemplate<String, OperationLog> queue;
-    private final OperationLog operationLog;
 
     public OperationLogTask(
             ExecutorService executorService, OperationLogRepository operationLogRepository,
-            RedisTemplate<String, OperationLog> queue,
-            OperationLog operationLog
+            RedisTemplate<String, OperationLog> queue
     ) {
         this.executorService = executorService;
         this.operationLogRepository = operationLogRepository;
         this.queue = queue;
-        this.operationLog = operationLog;
     }
 
     @SneakyThrows

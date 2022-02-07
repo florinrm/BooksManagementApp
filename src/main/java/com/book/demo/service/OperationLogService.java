@@ -33,6 +33,6 @@ public class OperationLogService {
                 LocalDate.now().toString()
         );
         queue.opsForList().rightPush(PROCESSING_QUEUE, operationLog);
-        executorService.submit(new OperationLogTask(executorService, operationLogRepository, queue, operationLog));
+        executorService.submit(new OperationLogTask(executorService, operationLogRepository, queue));
     }
 }
