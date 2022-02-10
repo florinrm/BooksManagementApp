@@ -79,9 +79,13 @@ public class BooksController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Book> getBookById(@PathVariable String id) {
+    public ResponseEntity<?> getBookById(@PathVariable String id) {
         var result = booksRepository.findById(id);
-        return result.map(book -> new ResponseEntity<>(book, HttpStatus.OK)).orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        if (result.isPresent()) {
+            return new ResponseEntity<>(result.get(), HttpStatus.OK);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Book with id " + id + " does not exist!");
+        }
     }
 
     @PutMapping("/{id}")
